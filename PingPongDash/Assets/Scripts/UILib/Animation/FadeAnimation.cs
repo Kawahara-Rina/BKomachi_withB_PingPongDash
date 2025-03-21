@@ -70,6 +70,14 @@ public class FadeAnimation : MonoBehaviour
     }
 
     /// <summary>
+    /// 別スクリプトから透明度を参照する用の関数
+    /// </summary>
+    public float GetAlpha()
+    {
+        return GetComponent<CanvasGroup>().alpha;
+    }
+
+    /// <summary>
     /// 初期化処理
     /// </summary>
     private void Init()
