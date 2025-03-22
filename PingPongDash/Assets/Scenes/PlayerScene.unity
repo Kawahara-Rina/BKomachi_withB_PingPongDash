@@ -254,7 +254,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defPosX: -300
-  speed: 1500
+  backSpeed: 1500
+  plusDist: 50
+  dashSpeed: 300
 --- !u!1 &1137344149
 GameObject:
   m_ObjectHideFlags: 0

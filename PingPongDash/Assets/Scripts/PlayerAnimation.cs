@@ -6,17 +6,26 @@ public class PlayerAnimation : MonoBehaviour
     // インターホン前(戻る場所)のx座標指定用
     [SerializeField] private float defPosX = 0.0f;
     // インターホン前に戻るまでのスピード
-    [SerializeField] private float speed=1.0f;
+    [SerializeField] private float backSpeed=1500.0f;
 
     // プレイヤーの座標取得用
     private Vector2 pos;
  
-
     // アニメーター取得用
     private Animator animator;
 
     // ステートが変わったかどうか
     private bool isStateChange;
+
+    // 走るときの追加値
+    [SerializeField] private float plusDist = 10.0f;
+    // 走る速さ
+    [SerializeField] private float dashSpeed = 150.0f;
+    // 走る距離の最大値
+    private float dashEndPos;
+
+    // デバッグ用　走る用の変数
+    private int dashCount;
 
     // デバッグ用
     // TODO　ここの取得するステータスを変更
@@ -30,11 +39,7 @@ public class PlayerAnimation : MonoBehaviour
         BACK,
     }
 
-    // TODO
-    // backの時の動き
-    // 
-
-    private State state = State.DASH;
+    private State state = State.PUSH;
 
     /// <summary>
     /// 初期化処理
@@ -106,9 +111,28 @@ public class PlayerAnimation : MonoBehaviour
         isStateChange = false;
     }
 
+    /// <summary>
+    /// Show、Normalアニメーション終了後に呼び出す関数
+    /// </summary>
     private void SetStateBack()
     {
         state = State.BACK;
+
+        // TODO 移動していない場合はBACKアニメーションは再生しない
+        pos = transform.localPosition;
+
+        if(pos.x == defPosX)
+        {
+            isStateChange = true;
+
+            state = State.PUSH;
+
+        }
+        else
+        {
+            animator.SetTrigger("Back");
+        }
+
     }
 
     /// <summary>
@@ -120,18 +144,63 @@ public class PlayerAnimation : MonoBehaviour
         {
             // 座標取得
             pos = transform.localPosition;
-            pos.x -= speed * Time.deltaTime;
+            pos.x -= backSpeed * Time.deltaTime;
 
-            // インターホン前まで動かす
-            if (pos.x > defPosX)
+           
+
+                // インターホン前まで動かす
+                if (pos.x > defPosX)
+                {
+                    transform.localPosition = new Vector2(pos.x, pos.y);
+                }
+                else
+                {
+                    transform.localPosition = new Vector2(defPosX, pos.y);
+                    state = State.PUSH;
+                    isStateChange = true;
+                }
+            
+
+            // 走る距離初期化
+            dashEndPos = defPosX;
+        }
+    }
+
+    /// <summary>
+    /// 走る動き
+    /// </summary>
+    private void DashMove()
+    {
+        if (state == State.DASH)
+        {
+            // カウントの変更を取得する用
+            var tmpCount = dashCount;
+
+            // 座標取得
+            pos = transform.localPosition;
+            pos.x += dashSpeed * Time.deltaTime;
+
+            // デバッグ用
+            // カウントが増えたら進む場所を遠くする
+            if (Input.GetMouseButtonDown(0))
+            {
+                dashCount++;
+            }
+
+            // TODO dashCountを本番に使う用の変数に修正する
+            if(tmpCount != dashCount)
+            {
+                dashEndPos += plusDist;
+            }
+
+            // 進む場所に(最大距離まで)進んでいく
+            if (pos.x < dashEndPos)
             {
                 transform.localPosition = new Vector2(pos.x, pos.y);
             }
             else
             {
-                transform.localPosition = new Vector2(defPosX, pos.y);
-                state = State.PUSH;
-                isStateChange = true;
+                transform.localPosition = new Vector2(dashEndPos, pos.y);
             }
         }
     }
@@ -148,6 +217,10 @@ public class PlayerAnimation : MonoBehaviour
         // アニメーション変更処理
         AnimationChange();
 
+        // 走っている時の動き
+        DashMove();
+
+        // 隠れた後 or 走った後→→インターホン前に戻る動き
         BackMove();
     }
 }
