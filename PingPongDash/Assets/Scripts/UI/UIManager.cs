@@ -30,6 +30,10 @@ public class UIManager : MonoBehaviour
     // プレイヤーアニメーション取得用
     //private PlayerAnimation pAnimation;
 
+    // SE取得用
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip buttonSE;
+
     /// <summary>
     /// 初期化関数
     /// </summary>
@@ -56,6 +60,18 @@ public class UIManager : MonoBehaviour
 
         ChangeMouseGUI(Common.STATE_PUSH);
 
+        // AudioSource取得
+        audioSource = GetComponent<AudioSource>();
+
+    }
+
+    /// <summary>
+    /// OKボタン押下時処理
+    /// </summary>
+    public void PushOKButton()
+    {
+        Common.PlaySE(audioSource, buttonSE);
+
     }
 
     /// <summary>
@@ -63,6 +79,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void PushTitleButton()
     {
+        Common.PlaySE(audioSource, buttonSE);
         sceneName = Common.SCENE_TITLE;
     }
 
@@ -71,6 +88,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void PushRetryButton()
     {
+        Common.PlaySE(audioSource, buttonSE);
         sceneName = Common.SCENE_GAME;
     }
 
