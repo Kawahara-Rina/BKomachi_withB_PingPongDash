@@ -5,10 +5,8 @@ using UnityEngine;
 
 namespace Kabasawa
 {
-    public class MouseMoveInput : MonoBehaviour 
+    public class MouseMoveInput 
     {
-        public static MouseMoveInput Instance { get; private set; }
-
         [SerializeField,Range(0f,0.9f)]
         float deadZone = 0f;
 
@@ -19,10 +17,10 @@ namespace Kabasawa
 
         float inputSpan = 0f;
 
-        List<IMouseMoveObject> objects = new List<IMouseMoveObject>();
+        List<IMouseMove> objects = new List<IMouseMove>();
 
 
-        public void Register(IMouseMoveObject _immObj)
+        public void Register(IMouseMove _immObj)
         {
             if (!objects.Contains(_immObj))
             {
@@ -30,25 +28,13 @@ namespace Kabasawa
             }
         }
 
-        public void Unregister(IMouseMoveObject _immObj)
+        public void Unregister(IMouseMove _immObj)
         {
             objects.Remove(_immObj);
         }
 
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-
         // Update is called once per frame
-        void Update()
+        public void Update()
         {
             MouseMoveDirection _in;
 
@@ -69,7 +55,7 @@ namespace Kabasawa
             {
                 preInputVec = _in;
 
-                foreach(IMouseMoveObject obj in objects)
+                foreach(IMouseMove obj in objects)
                 {
                     obj.OnMouseMoveChangeEvent();
                 }
@@ -77,7 +63,7 @@ namespace Kabasawa
                 switch(preInputVec)
                 {
                     case MouseMoveDirection.UP:
-                        foreach (IMouseMoveObject obj in objects)
+                        foreach (IMouseMove obj in objects)
                         {
                             obj.OnMouseMoveChangeUP();
                         }
@@ -86,7 +72,7 @@ namespace Kabasawa
 
                     case MouseMoveDirection.DOWN:
 
-                        foreach (IMouseMoveObject obj in objects)
+                        foreach (IMouseMove obj in objects)
                         {
                             obj.OnMouseMoveChangeDown();
                         }
@@ -100,18 +86,6 @@ namespace Kabasawa
 
         }
 
-        /// <summary>
-        /// äOïîÇ©ÇÁê∂ê¨Ç≈Ç´ÇÈÇÊÇ§Ç…Ç∑ÇÈ
-        /// </summary>
-        public static MouseMoveInput CreateInstance()
-        {
-            if (Instance == null)
-            {
-                GameObject obj = new GameObject("MouseMoveInput");
-                Instance = obj.AddComponent<MouseMoveInput>();
-            }
-            return Instance;
-        }
 
         /// <summary>
         /// MouseÇÃà⁄ìÆï˚å¸ÇéÊìæÇµÇ‹Ç∑
@@ -150,6 +124,3 @@ namespace Kabasawa
         }
     }
 }
-
-
-            

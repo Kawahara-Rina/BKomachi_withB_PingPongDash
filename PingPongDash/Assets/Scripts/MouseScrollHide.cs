@@ -4,24 +4,12 @@ using UnityEngine;
 
 namespace NakanoScroll
 {
-    public class MouseScrollHide : MonoBehaviour
+    public class MouseScrollHide
     {
         public float deadZone = 0.05f;  // 値以下のスクロールは無視
-        private bool isHide = false;    // フラグ
+        public bool isHide = false;    // フラグ
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            HandleScrollSwitch();   // 隠れると隠れていないを切り替える
-        }
-
-        void HandleScrollSwitch()
+        public void Update()
         {
             float scroll = Input.GetAxis("Mouse ScrollWheel");
 
