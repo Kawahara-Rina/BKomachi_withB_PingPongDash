@@ -39,7 +39,10 @@ public class PlayerAnimation : MonoBehaviour
         BACK,
     }
 
-    private State state = State.PUSH;
+    public State state = State.PUSH;
+
+    // UIManageréÊìæóp
+    private UIManager um;
 
     /// <summary>
     /// èâä˙âªèàóù
@@ -48,6 +51,10 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         isStateChange = false;
+
+        um = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+
     }
 
     /// <summary>
@@ -87,22 +94,28 @@ public class PlayerAnimation : MonoBehaviour
             switch (state)
             {
                 case State.PUSH:
+                    um.ChangeMouseGUI(Common.STATE_PUSH);
                     animator.SetTrigger("Idle");
                     break;
 
                 case State.DASH:
+                    um.ChangeMouseGUI(Common.STATE_DASH);
                     animator.SetTrigger("Dash");
                     break;
 
                 case State.HIDE:
+                    um.ChangeMouseGUI(Common.STATE_HIDE);
                     animator.SetTrigger("Hide");
                     break;
 
                 case State.SHOW:
+                    um.ChangeMouseGUI(Common.STATE_SHOW);
                     animator.SetTrigger("Show");
+
                     break;
 
                 case State.NORMAL:
+                    um.ChangeMouseGUI(Common.STATE_NORMAL);
                     animator.SetTrigger("Normal");
                     break;
             }

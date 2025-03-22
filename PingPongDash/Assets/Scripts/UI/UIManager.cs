@@ -17,6 +17,18 @@ public class UIManager : MonoBehaviour
     // 遷移するシーン格納用
     private string sceneName;
 
+    // 各マウスGUIのアニメーター取得用
+    [SerializeField] private GameObject pushMouseImage;
+    [SerializeField] private GameObject dashMouseImage;
+    [SerializeField] private GameObject hideMouseImage;
+    [SerializeField] private GameObject showMouseImage;
+    private Animator pushAnimator;
+    private Animator dashAnimator;
+    private Animator hideAnimator;
+    private Animator showAnimator;
+
+    // プレイヤーアニメーション取得用
+    //private PlayerAnimation pAnimation;
 
     /// <summary>
     /// 初期化関数
@@ -32,6 +44,18 @@ public class UIManager : MonoBehaviour
 
         // フェードプレファブ取得
         fadeAnimation = GameObject.Find("FadePrefab").GetComponent<FadeAnimation>();
+
+        // プレイヤーアニメーション取得
+        //pAnimation = GameObject.Find("PlayerImage").GetComponent<PlayerAnimation>();
+
+        // 各マウスGUIのアニメーター取得
+        pushAnimator = pushMouseImage.GetComponent<Animator>();
+        dashAnimator = dashMouseImage.GetComponent<Animator>();
+        hideAnimator = hideMouseImage.GetComponent<Animator>();
+        showAnimator = showMouseImage.GetComponent<Animator>();
+
+        ChangeMouseGUI(Common.STATE_PUSH);
+
     }
 
     /// <summary>
@@ -93,6 +117,71 @@ public class UIManager : MonoBehaviour
                     Common.LoadScene(Common.SCENE_GAME);
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// マウスGUIの表示を切り替える処理 表示用
+    /// </summary>
+    public void ChangeMouseGUI(int _state)
+    {
+        // 現在のステートによって切り替え
+        switch (_state)
+        {
+            case Common.STATE_PUSH:
+                // 表示するもの　「プッシュ」・「ダッシュ」・「ハイド」
+                pushAnimator.SetBool("Idle", false);
+                pushAnimator.SetBool("Move", true);
+                dashAnimator.SetBool("Idle", false);
+                dashAnimator.SetBool("Move", true);
+                hideAnimator.SetBool("Idle", false);
+                hideAnimator.SetBool("Move", true);
+                
+                // 非表示　「ショー」
+                showAnimator.SetBool("Idle", true);
+                showAnimator.SetBool("Move", false);
+                break;
+
+            case Common.STATE_DASH:
+                // 表示するもの　「ダッシュ」・「ハイド」
+                dashAnimator.SetBool("Idle", false);
+                dashAnimator.SetBool("Move", true);
+                hideAnimator.SetBool("Idle", false);
+                hideAnimator.SetBool("Move", true);
+
+                // 非表示　「プッシュ」・「ショー」
+                pushAnimator.SetBool("Idle", true);
+                pushAnimator.SetBool("Move", false);
+                showAnimator.SetBool("Idle", true);
+                showAnimator.SetBool("Move", false);
+                break;
+
+            case Common.STATE_HIDE:
+                // 表示するもの　「ショー」
+                showAnimator.SetBool("Idle", false);
+                showAnimator.SetBool("Move", true);
+
+                // 非表示　「プッシュ」・「ダッシュ」・「ハイド」
+                pushAnimator.SetBool("Idle", true);
+                pushAnimator.SetBool("Move", false);
+                dashAnimator.SetBool("Idle", true);
+                dashAnimator.SetBool("Move", false);
+                hideAnimator.SetBool("Idle", true);
+                hideAnimator.SetBool("Move", false);
+                break;
+
+            case Common.STATE_SHOW:
+            case Common.STATE_NORMAL:
+                // すべて非表示
+                pushAnimator.SetBool("Idle", true);
+                pushAnimator.SetBool("Move", false);
+                dashAnimator.SetBool("Idle", true);
+                dashAnimator.SetBool("Move", false);
+                hideAnimator.SetBool("Idle", true);
+                hideAnimator.SetBool("Move", false);
+                showAnimator.SetBool("Idle", true);
+                showAnimator.SetBool("Move", false);
+                break;
         }
     }
 
