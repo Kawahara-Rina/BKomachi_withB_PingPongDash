@@ -8,9 +8,9 @@ public class MouseAvg : IMouseMove
 {
 
     private float changeCnt = 0;    // Ø‚è‘Ö‚í‚è‰ñ”
-    private Queue<float> secondCnts = new Queue<float>(3);    // –ˆ•b‰ñ”
+    private Queue<float> secondCnts = new Queue<float>();    // –ˆ•b‰ñ”
     private float timeElapsed = 0f; // Œo‰ßŠÔ
-    private float duration = 1f;    // ŠÔŠu
+    private float duration = 0.5f;    // ŠÔŠu
 
 
     // Start is called before the first frame update
@@ -56,7 +56,11 @@ public class MouseAvg : IMouseMove
 
         float average = total / secondCnts.Count;
 
-        return Mathf.Clamp(average / 10f, 0f, 1f);
+        float t = Mathf.InverseLerp(0, 14f, average);
+        float easedT = Mathf.Pow(t, 0.5f); // 0.5fˆÈ‰º‚É‚·‚é‚ÆŒã”¼‚Ìã‚ª‚è•‚ª¬‚³‚¢
+        float result = Mathf.Lerp(0, 1.3f, easedT);
+
+        return result;
     }
 
     public override void OnMouseMoveChangeEvent()

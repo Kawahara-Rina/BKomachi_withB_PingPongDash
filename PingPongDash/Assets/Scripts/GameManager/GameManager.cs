@@ -23,6 +23,14 @@ namespace Kabasawa
 
         MainGameUI uiManager;
 
+        [SerializeField]
+        PlayerAnimation player;
+
+        [SerializeField]
+        BGMManager bgmManager;
+
+        MainGameManager mainGameManager;
+
         /// <summary>
         /// êßå¿éûä‘É~ÉäïbíPà 
         /// </summary>
@@ -51,6 +59,8 @@ namespace Kabasawa
             uiManager.ShowTutorialPanel();
 
             uiManager.ChangeMouseGUI(Common.STATE_NORMAL);
+
+            mainGameManager = new MainGameManager(player,bgmManager,uiManager);
         }
 
         /// <summary>
@@ -63,7 +73,7 @@ namespace Kabasawa
 
         void Play()
         {
-            Debug.Log("PLayíÜ");
+            mainGameManager.Loop();
         }
 
         void TimeUp()
@@ -123,6 +133,7 @@ namespace Kabasawa
         {
             state = GameState.PLAY;
             timerObserver.SetTimer();
+            uiManager.ChangeMouseGUI(Common.STATE_PUSH);
         }
 
         /// <summary>

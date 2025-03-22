@@ -14,9 +14,6 @@ public class PlayerAnimation : MonoBehaviour
     // アニメーター取得用
     private Animator animator;
 
-    // ステートが変わったかどうか
-    private bool isStateChange;
-
     // 走るときの追加値
     [SerializeField] private float plusDist = 10.0f;
     // 走る速さ
@@ -27,10 +24,13 @@ public class PlayerAnimation : MonoBehaviour
     // デバッグ用　走る用の変数
     private int dashCount;
 
+    public float pushSpeed;
+
     // デバッグ用
     // TODO　ここの取得するステータスを変更
     public enum State
     {
+        IDLE,
         PUSH,
         DASH,
         HIDE,
@@ -39,89 +39,56 @@ public class PlayerAnimation : MonoBehaviour
         BACK,
     }
 
-    public State state = State.PUSH;
+    public State state = State.IDLE;
 
-    // UIManager取得用
-    private UIManager um;
 
     /// <summary>
     /// 初期化処理
     /// </summary>
     private void Init()
     {
+        pushSpeed = 1;
         animator = GetComponent<Animator>();
-        isStateChange = false;
 
-        um = GameObject.Find("UIManager").GetComponent<UIManager>();
+        //um = GameObject.Find("UIManager").GetComponent<UIManager>();
 
 
     }
 
     /// <summary>
-    /// アニメーション変更処理
+    /// ステート変更の関数
     /// </summary>
-    private void AnimationChange()
+    public void ChangeState(State newState)
     {
-        // デバッグ用
-        if (Input.GetKeyDown(KeyCode.Q))
+        if(state != newState)
         {
-            state = State.PUSH;
-            isStateChange = true;
+            state = newState;
+            animator.SetTrigger(StateToAnimationName(newState));
         }
-        if (Input.GetKeyDown(KeyCode.W))
+    }
+
+    // Stateからアニメーションの名前に変換する
+    private string StateToAnimationName(State state)
+    {
+        switch (state)
         {
-            state = State.DASH;
-            isStateChange = true;
+            case State.IDLE:
+                return "Idle";
+            case State.PUSH:
+                return "Push";
+            case State.DASH:
+                return "Dash";
+            case State.HIDE:
+                return "Hide";
+            case State.SHOW:
+                return "Show";
+            case State.NORMAL:
+                return "Normal";
+            case State.BACK:
+                return "Back";
+            default:
+                return string.Empty;
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            state = State.HIDE;
-            isStateChange = true;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            state = State.SHOW;
-            isStateChange = true;
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            state = State.NORMAL;
-            isStateChange = true;
-        }
-
-        if (isStateChange)
-        {
-            switch (state)
-            {
-                case State.PUSH:
-                    um.ChangeMouseGUI(Common.STATE_PUSH);
-                    animator.SetTrigger("Idle");
-                    break;
-
-                case State.DASH:
-                    um.ChangeMouseGUI(Common.STATE_DASH);
-                    animator.SetTrigger("Dash");
-                    break;
-
-                case State.HIDE:
-                    um.ChangeMouseGUI(Common.STATE_HIDE);
-                    animator.SetTrigger("Hide");
-                    break;
-
-                case State.SHOW:
-                    um.ChangeMouseGUI(Common.STATE_SHOW);
-                    animator.SetTrigger("Show");
-
-                    break;
-
-                case State.NORMAL:
-                    um.ChangeMouseGUI(Common.STATE_NORMAL);
-                    animator.SetTrigger("Normal");
-                    break;
-            }
-        }
-
-        isStateChange = false;
     }
 
     /// <summary>
@@ -136,9 +103,7 @@ public class PlayerAnimation : MonoBehaviour
 
         if(pos.x == defPosX)
         {
-            isStateChange = true;
-            state = State.PUSH;
-
+            ChangeState(State.PUSH);
         }
         else
         {
@@ -158,7 +123,6 @@ public class PlayerAnimation : MonoBehaviour
             pos = transform.localPosition;
             pos.x -= backSpeed * Time.deltaTime;
 
-           
 
                 // インターホン前まで動かす
                 if (pos.x > defPosX)
@@ -168,8 +132,7 @@ public class PlayerAnimation : MonoBehaviour
                 else
                 {
                     transform.localPosition = new Vector2(defPosX, pos.y);
-                    state = State.PUSH;
-                    isStateChange = true;
+                    ChangeState(State.PUSH);
                 }
             
 
@@ -226,13 +189,22 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // アニメーション変更処理
-        AnimationChange();
+        if(state == State.PUSH)
+        {
+            animator.speed = pushSpeed;
+        }
+        else
+        {
+            animator.speed = 1;
+        }
 
         // 走っている時の動き
         DashMove();
 
         // 隠れた後 or 走った後→→インターホン前に戻る動き
         BackMove();
+
+        Debug.Log(state);
     }
+
 }

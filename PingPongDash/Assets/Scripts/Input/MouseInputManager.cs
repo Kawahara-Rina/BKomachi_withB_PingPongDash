@@ -8,7 +8,7 @@ namespace Kabasawa
         public AlternateMouseClickObserver alternateMouseClickObserver ;
         public MouseMoveInput mouseMoveInput ;
         public MouseAvg mouseAvg ;
-        public MouseScrollHide mouseScrollHide ;
+        public MouseScroll mouseScroll ;
 
         public static MouseInputManager Instance { get; private set; }
 
@@ -17,6 +17,10 @@ namespace Kabasawa
             if (Instance == null)
             {
                 Instance = this;
+                alternateMouseClickObserver = new AlternateMouseClickObserver();
+                mouseMoveInput = new MouseMoveInput();
+                mouseAvg = new MouseAvg();
+                mouseScroll = new MouseScroll();
             }
             else
             {
@@ -24,20 +28,13 @@ namespace Kabasawa
             }
         }
 
-        private void Start()
-        {
-             alternateMouseClickObserver = new AlternateMouseClickObserver();
-             mouseMoveInput = new MouseMoveInput();
-             mouseAvg = new MouseAvg();
-             mouseScrollHide = new MouseScrollHide();
-        }
 
         private void Update()
         {
             alternateMouseClickObserver.Update();
             mouseMoveInput.Update();
             mouseAvg.Update();
-            mouseScrollHide.Update();
+            mouseScroll.Update();
         }
 
 
