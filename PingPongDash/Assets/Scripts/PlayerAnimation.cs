@@ -124,7 +124,6 @@ public class PlayerAnimation : MonoBehaviour
         if(pos.x == defPosX)
         {
             isStateChange = true;
-
             state = State.PUSH;
 
         }

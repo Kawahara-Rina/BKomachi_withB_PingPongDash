@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8149761669971356206}
   - component: {fileID: 6263369158551624625}
   - component: {fileID: 2275939661344139030}
+  - component: {fileID: 8243669534476855097}
   m_Layer: 5
   m_Name: PlayerImage
   m_TagString: Untagged
@@ -97,3 +98,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8243669534476855097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3820884074322645785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a1197b10c823ae4ca16904672039da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defPosX: -300
+  backSpeed: 1500
+  plusDist: 50
+  dashSpeed: 300
