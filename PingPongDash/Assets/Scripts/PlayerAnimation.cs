@@ -44,6 +44,11 @@ public class PlayerAnimation : MonoBehaviour
     // UIManager取得用
     private UIManager um;
 
+    // SE取得
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip doorSE;
+    [SerializeField] private AudioClip templeSE;
+
     /// <summary>
     /// 初期化処理
     /// </summary>
@@ -54,7 +59,7 @@ public class PlayerAnimation : MonoBehaviour
 
         um = GameObject.Find("UIManager").GetComponent<UIManager>();
 
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -217,6 +222,21 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// デバッグ用　本番は呼び出さない
+    /// </summary>
+    private void Debug()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Common.PlaySE(audioSource, templeSE);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Common.PlaySE(audioSource, doorSE);
+        }
+    }
+
     private void Awake()
     {
         // 初期化処理
@@ -234,5 +254,9 @@ public class PlayerAnimation : MonoBehaviour
 
         // 隠れた後 or 走った後→→インターホン前に戻る動き
         BackMove();
+
+
+        // TODO デバッグ用　本番は呼び出さない
+        Debug();
     }
 }
