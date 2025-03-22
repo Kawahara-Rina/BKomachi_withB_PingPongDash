@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
 {
     // マウスイメージ・アニメーター取得用
     //[SerializeField] private GameObject mouseImage;
-    //private Animator animator;
+    private Animator animator;
     //private bool isAnimationChange;
 
     // チュートリアルパネルのスライドアニメーション用
