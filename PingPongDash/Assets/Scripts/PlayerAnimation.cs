@@ -51,8 +51,6 @@ public class PlayerAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
 
         //um = GameObject.Find("UIManager").GetComponent<UIManager>();
-
-
     }
 
     /// <summary>
@@ -119,6 +117,8 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (state == State.BACK)
         {
+            Debug.Log("a");
+
             // ç¿ïWéÊìæ
             pos = transform.localPosition;
             pos.x -= backSpeed * Time.deltaTime;
@@ -132,7 +132,7 @@ public class PlayerAnimation : MonoBehaviour
                 else
                 {
                     transform.localPosition = new Vector2(defPosX, pos.y);
-                    ChangeState(State.PUSH);
+                    ChangeState(State.IDLE);
                 }
             
 
