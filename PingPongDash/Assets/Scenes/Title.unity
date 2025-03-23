@@ -1842,8 +1842,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorSE: {fileID: 8300000, guid: 86ed2828672a07f468d46d8d1a80bb1a, type: 3}
   templeSE: {fileID: 8300000, guid: f4deee5a54f56c547b116fed57073faa, type: 3}
-  stage1HighScoreText: {fileID: 0}
-  stage2HighScoreText: {fileID: 0}
+  stage1HighScoreText: {fileID: 715192683}
+  stage2HighScoreText: {fileID: 1801574039}
 --- !u!4 &1642728450
 Transform:
   m_ObjectHideFlags: 0
