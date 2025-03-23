@@ -21,6 +21,19 @@ namespace Kabasawa
 
         TimerObserver timerObserver;
 
+        MainGameUI uiManager;
+
+        [SerializeField]
+        PlayerAnimation player;
+
+        [SerializeField]
+        BGMManager bgmManager;
+
+        MainGameManager mainGameManager;
+
+        [SerializeField]
+        string stageName = "stage01";
+
         /// <summary>
         /// 制限時間ミリ秒単位
         /// </summary>
@@ -36,8 +49,6 @@ namespace Kabasawa
         void Update()
         {
             GameLoop();
-            // シーン変更処理
-            SceneChange();
         }
 
         
@@ -46,17 +57,13 @@ namespace Kabasawa
             timerObserver = new TimerObserver(TimeLimit, this);
             state = GameState.START;
 
-            // チュートリアルパネル取得
-            slideAnimation = GameObject.Find("TutorialPanel").GetComponent<SlideAnimation>();
-            isSlide = false;
+            uiManager = new MainGameUI();
 
-            // リザルトパネル取得
-            zoomAnimation = GameObject.Find("ResultPanel").GetComponent<ZoomAnimation>();
+            uiManager.ShowTutorialPanel();
 
-            // フェードプレファブ取得
-            fadeAnimation = GameObject.Find("FadePrefab").GetComponent<FadeAnimation>();
+            uiManager.ChangeMouseGUI(Common.STATE_NORMAL);
 
-            ShowTutorialPanel();
+            mainGameManager = new MainGameManager(player,bgmManager,uiManager);
         }
 
         /// <summary>
@@ -69,7 +76,7 @@ namespace Kabasawa
 
         void Play()
         {
-            Debug.Log("PLay中");
+            mainGameManager.Loop();
         }
 
         void TimeUp()
@@ -84,7 +91,9 @@ namespace Kabasawa
 
         void Result()
         {
-            zoomAnimation.ShowZoomIn();
+            ScoreRanking.Save(new ScoreRankingConfig(stageName, 1), mainGameManager.score);
+            ScoreRanking.Save(new ScoreRankingConfig("stage02", 1), mainGameManager.score);
+            uiManager.ShowResultPanel();
         }
 
         void GameLoop()
@@ -122,25 +131,6 @@ namespace Kabasawa
             state = GameState.TIME_UP;
         }
 
-        // マウスイメージ・アニメーター取得用
-        //[SerializeField] private GameObject mouseImage;
-        private Animator animator;
-        //private bool isAnimationChange;
-
-        // チュートリアルパネルのスライドアニメーション用
-        SlideAnimation slideAnimation;
-        private bool isSlide;
-
-        // リザルトパネルのズームアニメーション用
-        ZoomAnimation zoomAnimation;
-
-        // フェードプレファブ取得用
-        FadeAnimation fadeAnimation;
-
-        // 遷移するシーン格納用
-        private string sceneName;
-
-
         /// <summary>
         /// Debug用
         /// </summary>
@@ -148,6 +138,7 @@ namespace Kabasawa
         {
             state = GameState.PLAY;
             timerObserver.SetTimer();
+            uiManager.ChangeMouseGUI(Common.STATE_PUSH);
         }
 
         /// <summary>
@@ -155,9 +146,7 @@ namespace Kabasawa
         /// </summary>
         public void PushTitleButton()
         {
-            sceneName = Common.SCENE_TITLE;
-
-            Debug.Log("Push");
+            uiManager.PushTitleButton();
         }
 
         /// <summary>
@@ -165,42 +154,9 @@ namespace Kabasawa
         /// </summary>
         public void PushRetryButton()
         {
-            sceneName = "mainGame";
+            uiManager.PushRetryButton();
         }
 
-        /// <summary>
-        /// チュートリアルパネルをスライドイン
-        /// </summary>
-        private void ShowTutorialPanel()
-        {
-            // フェードインが終わってからスライドイン
-            if (fadeAnimation.GetAlpha() <= 0 && !isSlide)
-            {
-                slideAnimation.SlideIn();
-                isSlide = true;
-            }
-        }
 
-        
-
-        /// <summary>
-        /// シーンを切り替える処理
-        /// </summary>
-        private void SceneChange()
-        {
-            if (fadeAnimation.GetAlpha() >= 1.0f)
-            {
-                switch (sceneName)
-                {
-                    case Common.SCENE_TITLE:
-                        Common.LoadScene(Common.SCENE_TITLE);
-                        break;
-
-                    case "mainGame":
-                        Common.LoadScene("mainGame");
-                        break;
-                }
-            }
-        }
     }
 }
