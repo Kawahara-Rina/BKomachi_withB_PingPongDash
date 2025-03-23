@@ -18,6 +18,8 @@ namespace Kabasawa
             RESULT,
         }
 
+        string sceneName;
+
         GameState state = GameState.START;
 
         TimerObserver timerObserver;
@@ -61,6 +63,8 @@ namespace Kabasawa
             GameLoop();
             timeText.text = ((float)timerObserver.RemainingTime() / 1000f).ToString();
             scoreText.text = mainGameManager.score.ToString();
+
+            SceneChange();
         }
 
         
@@ -160,15 +164,47 @@ namespace Kabasawa
         /// </summary>
         public void PushTitleButton()
         {
-            uiManager.PushTitleButton();
+            sceneName = Common.SCENE_TITLE;
         }
 
         /// <summary>
         /// リトライボタン押下時
         /// </summary>
-        public void PushRetryButton()
+        public void PushRetryStage1Button()
         {
-            uiManager.PushRetryButton();
+            sceneName = Common.SCENE_STAGE1;
+        }
+
+        /// <summary>
+        /// リトライボタン押下時
+        /// </summary>
+        public void PushRetryStage2Button()
+        {
+            sceneName = Common.SCENE_STAGE2;
+        }
+
+        /// <summary>
+        /// シーンを切り替える処理
+        /// </summary>
+        private void SceneChange()
+        {
+            if (uiManager.fadeAnimation.GetAlpha() >= 1.0f)
+            {
+                switch (sceneName)
+                {
+                    case Common.SCENE_STAGE1:
+                        Common.LoadScene(Common.SCENE_STAGE1);
+                        break;
+
+                    case Common.SCENE_STAGE2:
+                        Common.LoadScene(Common.SCENE_STAGE2);
+                        break;
+
+                    case Common.SCENE_TITLE:
+                        Common.LoadScene(Common.SCENE_TITLE);
+                        break;
+                }
+            }
         }
 
 
