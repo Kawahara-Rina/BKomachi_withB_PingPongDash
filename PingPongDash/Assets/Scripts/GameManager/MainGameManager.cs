@@ -19,6 +19,8 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     MainGameUI mainGameUI;
 
+    Enemy enemy;
+
 
     /*********************管理するクラス*********************/
 
@@ -33,11 +35,16 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     float preDashInput = 0;
 
-    public MainGameManager(PlayerAnimation player, BGMManager bgmManager, MainGameUI mainGameUI)
+    public bool isGameOver = false;
+
+    public bool isActive = false;
+
+    public MainGameManager(PlayerAnimation player, BGMManager bgmManager, MainGameUI mainGameUI, Enemy enemy)
     {
         this.player = player;
         this.bgmManager = bgmManager;
         this.mainGameUI = mainGameUI;
+        this.enemy = enemy;
 
         mouse = MouseInputManager.Instance;
 
@@ -49,6 +56,8 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     public void OnAlternateMouseClick()
     {
+        if (!isActive) { return; }
+
         if(
             player.state == PlayerAnimation.State.IDLE ||
             player.state == PlayerAnimation.State.PUSH ||
@@ -70,7 +79,14 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
     /// </summary>
     public void Loop()
     {
-        switch(player.state)
+
+
+        if (enemy.isView && player.state != PlayerAnimation.State.HIDE)
+        {
+            isGameOver = true;
+        }
+
+        switch (player.state)
         {
             case PlayerAnimation.State.IDLE:
                 IDLE();
@@ -127,7 +143,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     public void OnScrollDown()
     {
-        //Debug.Log("HIDE処理を実行");
+        if (!isActive) { return; }
 
         if (
             player.state == PlayerAnimation.State.IDLE ||
@@ -143,7 +159,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     public void OnScrollUp()
     {
-        //Debug.Log("SHOW処理を実行");
+        if (!isActive) { return; }
 
         if (
             player.state == PlayerAnimation.State.HIDE
@@ -157,9 +173,12 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     public override void OnMouseMoveChangeUP()
     {
-        if(player.state == PlayerAnimation.State.PUSH)
+        if (!isActive) { return; }
+
+        if (player.state == PlayerAnimation.State.PUSH)
         {
             score++;
+            enemy.PingPong();
             Debug.Log("scoreUP!!");
         }
     }
