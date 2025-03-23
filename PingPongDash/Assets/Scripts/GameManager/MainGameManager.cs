@@ -11,7 +11,6 @@ using UnityEngine.Playables;
 /// </summary>
 public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickListener
 {
-
     /*********************ä«óùÇ∑ÇÈÉNÉâÉX*********************/
 
     PlayerAnimation player;
@@ -50,15 +49,20 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     public void OnAlternateMouseClick()
     {
-        Debug.Log("AAAA");
+        if(
+            player.state == PlayerAnimation.State.IDLE ||
+            player.state == PlayerAnimation.State.PUSH ||
+            player.state == PlayerAnimation.State.DASH
+            )
+        {
+            preDashInput = Time.fixedTime;
 
-        preDashInput = Time.fixedTime;
+            player.dashCount++;
 
-        player.dashCount++;
-
-        player.ChangeState(PlayerAnimation.State.DASH);
-        bgmManager.SetBGM(player.state);
-        mainGameUI.ChangeMouseGUI(Common.STATE_DASH);
+            player.ChangeState(PlayerAnimation.State.DASH);
+            bgmManager.SetBGM(player.state);
+            mainGameUI.ChangeMouseGUI(Common.STATE_DASH);
+        }
     }
 
     /// <summary>
@@ -86,7 +90,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
     {
         mainGameUI.ChangeMouseGUI(Common.STATE_PUSH);
 
-        if(mouse.mouseAvg.Get() >= 0.2f)
+        if(mouse.mouseAvg.Get() >= 0.5f)
         {
             player.ChangeState(PlayerAnimation.State.PUSH);
         }
@@ -98,26 +102,26 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
         //TODO ë√ã¶Ç»ÇÃÇ≈Ç´ÇÍÇ¢Ç…Ç≈Ç´ÇΩÇÁÇ∑ÇÈ
         mainGameUI.ChangeMouseGUI(Common.STATE_PUSH);
 
-        //if (mouse.mouseAvg.Get() < 0.2f)
-        //{
-        //    player.ChangeState(PlayerAnimation.State.IDLE);
-        //    player.pushSpeed = 0;
-        //}
-        //else
-        //{
-        //    player.pushSpeed = mouse.mouseAvg.Get();
-        //}
+        if (mouse.mouseAvg.Get() < 0.5f)
+        {
+            player.ChangeState(PlayerAnimation.State.IDLE);
+            player.pushSpeed = 0;
+        }
+        else
+        {
+            player.pushSpeed = mouse.mouseAvg.Get();
+        }
     }
 
     void DASH()
     {
-        if(preDashInput > Time.fixedTime + 0.1f)
+        if(preDashInput + 0.6f < Time.fixedTime)
         {
-            player.ChangeState(PlayerAnimation.State.NORMAL);
             player.dashCount = 0;
 
             bgmManager.SetBGM(player.state);
             mainGameUI.ChangeMouseGUI(Common.STATE_NORMAL);
+            player.ChangeState(PlayerAnimation.State.NORMAL);
         }
     }
 

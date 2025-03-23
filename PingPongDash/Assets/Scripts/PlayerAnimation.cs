@@ -60,6 +60,8 @@ public class PlayerAnimation : MonoBehaviour
     {
         if(state != newState)
         {
+            animator.ResetTrigger(StateToAnimationName(state));
+
             state = newState;
             animator.SetTrigger(StateToAnimationName(newState));
         }
