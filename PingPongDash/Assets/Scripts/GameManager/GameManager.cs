@@ -71,11 +71,11 @@ namespace Kabasawa
 
             uiManager = new MainGameUI();
 
-            uiManager.ShowTutorialPanel();
-
             uiManager.ChangeMouseGUI(Common.STATE_NORMAL);
 
             mainGameManager = new MainGameManager(player,bgmManager,uiManager, enemy);
+
+            state = GameState.START;
         }
 
         /// <summary>
@@ -153,14 +153,6 @@ namespace Kabasawa
         public void OnTimeUp()
         {
             state = GameState.TIME_UP;
-        }
-
-        /// <summary>
-        /// Debug—p
-        /// </summary>
-        public void PushStartButton()
-        {
-            state = GameState.START;
         }
 
         /// <summary>

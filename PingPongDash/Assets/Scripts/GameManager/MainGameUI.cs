@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class MainGameUI
 {
-    // チュートリアルパネルのスライドアニメーション用
-    SlideAnimation slideAnimation;
-    private bool isSlide;
-
     // リザルトパネルのズームアニメーション用
     ZoomAnimation zoomAnimation;
 
@@ -34,10 +30,6 @@ public class MainGameUI
     /// </summary>
     private void Init()
     {
-        // チュートリアルパネル取得
-        slideAnimation = GameObject.Find("TutorialPanel").GetComponent<SlideAnimation>();
-        isSlide = false;
-
         // リザルトパネル取得
         zoomAnimation = GameObject.Find("ResultPanel").GetComponent<ZoomAnimation>();
 
@@ -73,19 +65,6 @@ public class MainGameUI
     public void PushRetryButton()
     {
         SceneChange(Common.SCENE_GAME);
-    }
-
-    /// <summary>
-    /// チュートリアルパネルをスライドイン
-    /// </summary>
-    public void ShowTutorialPanel()
-    {
-        // フェードインが終わってからスライドイン
-        if (fadeAnimation.GetAlpha() <= 0 && !isSlide)
-        {
-            slideAnimation.SlideIn();
-            isSlide = true;
-        }
     }
 
     /// <summary>
