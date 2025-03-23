@@ -59,15 +59,14 @@ public class TitleManager : MonoBehaviour
     {
         if (fadeAnimation.GetAlpha() >= 1.0f)
         {
-            // TODO ëJà⁄Ç∑ÇÈÉVÅ[ÉìÇÃïœçX
             switch (sceneName)
             {
                 case Common.SCENE_STAGE1:
-                    Common.LoadScene(Common.SCENE_GAME);
+                    Common.LoadScene(Common.SCENE_STAGE1);
                     break;
 
                 case Common.SCENE_STAGE2:
-                    Common.LoadScene(Common.SCENE_GAME);
+                    Common.LoadScene(Common.SCENE_STAGE2);
                     break;
             }
         }
