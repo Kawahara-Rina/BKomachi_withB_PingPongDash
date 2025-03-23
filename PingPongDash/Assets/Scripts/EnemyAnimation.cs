@@ -33,15 +33,15 @@ public class EnemyAnimation : MonoBehaviour
 
     private void Debug()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            // TODO　ステートを変える場所を変更する
-            state = EnemyState.SHOW;
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            state = EnemyState.OUT;
-        }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    // TODO　ステートを変える場所を変更する
+        //    state = EnemyState.SHOW;
+        //}
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    state = EnemyState.OUT;
+        //}
     }
 
     private void ChangeAnimation()
