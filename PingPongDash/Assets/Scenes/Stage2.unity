@@ -864,6 +864,14 @@ PrefabInstance:
     - target: {fileID: 4300661305930935775, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
+      objectReference: {fileID: 825670019}
+    - target: {fileID: 4300661305930935775, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: PushTitleButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300661305930935775, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: Kabasawa.GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7265745318749734909, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -875,7 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 825670019}
     - target: {fileID: 7265745318749734909, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: PushRetryButton
+      value: PushRetryStage2Button
       objectReference: {fileID: 0}
     - target: {fileID: 7265745318749734909, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName

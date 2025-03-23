@@ -8,7 +8,7 @@ public class MainGameUI
     ZoomAnimation zoomAnimation;
 
     // フェードプレファブ取得用
-    FadeAnimation fadeAnimation;
+    public FadeAnimation fadeAnimation;
 
 
     // 各マウスGUIのアニメーター取得用
@@ -62,9 +62,17 @@ public class MainGameUI
     /// <summary>
     /// リトライボタン押下時
     /// </summary>
-    public void PushRetryButton()
+    public void PushRetryStage1Button()
     {
-        SceneChange(Common.SCENE_GAME);
+        SceneChange(Common.SCENE_STAGE1);
+    }
+
+    /// <summary>
+    /// リトライボタン押下時
+    /// </summary>
+    public void PushRetryStage2Button()
+    {
+        SceneChange(Common.SCENE_STAGE2);
     }
 
     /// <summary>
