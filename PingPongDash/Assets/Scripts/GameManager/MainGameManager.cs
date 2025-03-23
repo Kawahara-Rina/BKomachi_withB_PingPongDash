@@ -39,12 +39,17 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     public bool isActive = false;
 
-    public MainGameManager(PlayerAnimation player, BGMManager bgmManager, MainGameUI mainGameUI, Enemy enemy)
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip audioClip;
+
+    public MainGameManager(PlayerAnimation player, BGMManager bgmManager, MainGameUI mainGameUI, Enemy enemy, AudioSource audio, AudioClip audioClip)
     {
         this.player = player;
         this.bgmManager = bgmManager;
         this.mainGameUI = mainGameUI;
         this.enemy = enemy;
+        this.audioSource = audio;
+        this.audioClip = audioClip;
 
         mouse = MouseInputManager.Instance;
 
@@ -179,6 +184,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
         {
             score++;
             enemy.PingPong();
+            Common.PlaySE(audioSource, audioClip);
             Debug.Log("scoreUP!!");
         }
     }
