@@ -29,6 +29,8 @@ public class Enemy : MonoBehaviour
     //‘«‰¹
     AudioSource audioSource;
 
+    [SerializeField]
+    EnemyAnimation enemyAnimation;
 
     void RandomDistance()
     {
@@ -87,6 +89,7 @@ public class Enemy : MonoBehaviour
             if (distance <= 0)
             {
                 RandomWait();
+                enemyAnimation.state = EnemyAnimation.EnemyState.SHOW;
             }
 
             return;
@@ -99,6 +102,8 @@ public class Enemy : MonoBehaviour
             if (waitTime <= 0)
             {
                 RandomDistance();
+                enemyAnimation.state = EnemyAnimation.EnemyState.OUT;
+
             }
 
             return;
