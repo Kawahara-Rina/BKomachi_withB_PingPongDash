@@ -29,6 +29,9 @@ namespace Kabasawa
         [SerializeField]
         BGMManager bgmManager;
 
+        [SerializeField]
+        Enemy enemy;
+
         MainGameManager mainGameManager;
 
         [SerializeField]
@@ -40,7 +43,7 @@ namespace Kabasawa
         [SerializeField]
         int TimeLimit = 60 * 1000;
 
-        void Awake()
+        void Start()
         {
             Init();
         }
@@ -63,7 +66,7 @@ namespace Kabasawa
 
             uiManager.ChangeMouseGUI(Common.STATE_NORMAL);
 
-            mainGameManager = new MainGameManager(player,bgmManager,uiManager);
+            mainGameManager = new MainGameManager(player,bgmManager,uiManager, enemy);
         }
 
         /// <summary>
@@ -71,22 +74,35 @@ namespace Kabasawa
         /// </summary>
         void GameStart()
         {
+            state = GameState.PLAY;
+            timerObserver.SetTimer();
+            uiManager.ChangeMouseGUI(Common.STATE_PUSH);
 
+            mainGameManager.isActive = true;
+            enemy.gameObject.SetActive(true);
         }
 
         void Play()
         {
             mainGameManager.Loop();
+            if(mainGameManager.isGameOver)
+            {
+                state = GameState.GAME_OVER;
+            }
         }
 
         void TimeUp()
         {
             state = GameState.RESULT;
+
+            mainGameManager.isActive = false;
         }
 
         void GameOver()
         {
+            state = GameState.RESULT;
 
+            mainGameManager.isActive = false;
         }
 
         void Result()
@@ -136,9 +152,7 @@ namespace Kabasawa
         /// </summary>
         public void PushStartButton()
         {
-            state = GameState.PLAY;
-            timerObserver.SetTimer();
-            uiManager.ChangeMouseGUI(Common.STATE_PUSH);
+            state = GameState.START;
         }
 
         /// <summary>
