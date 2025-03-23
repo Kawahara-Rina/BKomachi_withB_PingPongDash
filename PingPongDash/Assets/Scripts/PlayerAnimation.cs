@@ -6,11 +6,11 @@ public class PlayerAnimation : MonoBehaviour
     // インターホン前(戻る場所)のx座標指定用
     [SerializeField] private float defPosX = 0.0f;
     // インターホン前に戻るまでのスピード
-    [SerializeField] private float backSpeed=1500.0f;
+    [SerializeField] private float backSpeed = 1500.0f;
 
     // プレイヤーの座標取得用
     private Vector2 pos;
- 
+
     // アニメーター取得用
     private Animator animator;
 
@@ -58,7 +58,7 @@ public class PlayerAnimation : MonoBehaviour
     /// </summary>
     public void ChangeState(State newState)
     {
-        if(state != newState)
+        if (state != newState)
         {
             animator.ResetTrigger(StateToAnimationName(state));
 
@@ -101,7 +101,7 @@ public class PlayerAnimation : MonoBehaviour
         // TODO 移動していない場合はBACKアニメーションは再生しない
         pos = transform.localPosition;
 
-        if(pos.x == defPosX)
+        if (pos.x == defPosX)
         {
             ChangeState(State.PUSH);
         }
@@ -126,17 +126,17 @@ public class PlayerAnimation : MonoBehaviour
             pos.x -= backSpeed * Time.deltaTime;
 
 
-                // インターホン前まで動かす
-                if (pos.x > defPosX)
-                {
-                    transform.localPosition = new Vector2(pos.x, pos.y);
-                }
-                else
-                {
-                    transform.localPosition = new Vector2(defPosX, pos.y);
-                    ChangeState(State.IDLE);
-                }
-            
+            // インターホン前まで動かす
+            if (pos.x > defPosX)
+            {
+                transform.localPosition = new Vector2(pos.x, pos.y);
+            }
+            else
+            {
+                transform.localPosition = new Vector2(defPosX, pos.y);
+                ChangeState(State.IDLE);
+            }
+
 
             // 走る距離初期化
             dashEndPos = defPosX;
@@ -165,7 +165,7 @@ public class PlayerAnimation : MonoBehaviour
             }
 
             // TODO dashCountを本番に使う用の変数に修正する
-            if(tmpCount != dashCount)
+            if (tmpCount != dashCount)
             {
                 dashEndPos += plusDist;
             }
@@ -191,7 +191,7 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(state == State.PUSH)
+        if (state == State.PUSH)
         {
             animator.speed = pushSpeed;
         }
