@@ -25,4 +25,12 @@ public class Common : MonoBehaviour
     {
         SceneManager.LoadScene(_sceneName);
     }
+
+    /// <summary>
+    /// SE‚ğ–Â‚ç‚·”Ä—pŠÖ”
+    /// </summary>
+    static public void PlaySE(AudioSource _audioSource,AudioClip _se)
+    {
+        _audioSource.PlayOneShot(_se);
+    }
 }

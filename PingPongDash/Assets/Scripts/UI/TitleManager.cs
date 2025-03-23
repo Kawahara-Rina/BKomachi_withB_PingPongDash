@@ -10,6 +10,11 @@ public class TitleManager : MonoBehaviour
     // シーンする遷移格納用
     private string sceneName;
 
+    // SE取得用
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip doorSE;
+    [SerializeField] private AudioClip templeSE;
+
     /// <summary>
     /// 初期化関数
     /// </summary>
@@ -18,6 +23,8 @@ public class TitleManager : MonoBehaviour
         // フェードプレファブ取得
         fadeAnimation = GameObject.Find("FadePrefab").GetComponent<FadeAnimation>();
 
+        // オーディオソース取得
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -25,6 +32,8 @@ public class TitleManager : MonoBehaviour
     /// </summary>
     public void PushStage1Button()
     {
+        // SE鳴らす
+        Common.PlaySE(audioSource,doorSE);
         sceneName = Common.SCENE_STAGE1;
     }
 
@@ -33,6 +42,8 @@ public class TitleManager : MonoBehaviour
     /// </summary>
     public void PushStage2Button()
     {
+        // SE鳴らす
+        Common.PlaySE(audioSource,templeSE);
         sceneName = Common.SCENE_STAGE2;
     }
 
