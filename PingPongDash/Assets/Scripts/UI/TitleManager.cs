@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class TitleManager : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip doorSE;
     [SerializeField] private AudioClip templeSE;
+
+    // ハイスコアテキスト取得用
+    [SerializeField] private Text stage1HighScoreText;
+    [SerializeField] private Text stage2HighScoreText;
 
     /// <summary>
     /// 初期化関数
@@ -68,6 +73,16 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ハイスコア表示処理
+    /// </summary>
+    private void ShowHighScore()
+    {
+        // TODO ハイスコア取得
+        //stage1HighScoreText.text = GetHighScore()?.ToString();
+        //stage2HighScoreText.text = GetHighScore()?.ToString();
+    }
+
     private void Awake()
     {
         // 初期化処理
@@ -80,5 +95,8 @@ public class TitleManager : MonoBehaviour
     {
         // シーン切り替え処理
         SceneChange();
+
+        // ハイスコア表示
+        ShowHighScore();
     }
 }
