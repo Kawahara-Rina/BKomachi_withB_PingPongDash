@@ -2,6 +2,7 @@ using Kabasawa;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Kabasawa
 {
@@ -37,6 +38,12 @@ namespace Kabasawa
         [SerializeField]
         string stageName = "stage01";
 
+        [SerializeField]
+        Text scoreText;
+
+        [SerializeField]
+        Text timeText;
+
         /// <summary>
         /// êßå¿éûä‘É~ÉäïbíPà 
         /// </summary>
@@ -52,6 +59,8 @@ namespace Kabasawa
         void Update()
         {
             GameLoop();
+            timeText.text = ((float)timerObserver.RemainingTime() / 1000f).ToString();
+            scoreText.text = mainGameManager.score.ToString();
         }
 
         
@@ -108,7 +117,6 @@ namespace Kabasawa
         void Result()
         {
             ScoreRanking.Save(new ScoreRankingConfig(stageName, 1), mainGameManager.score);
-            ScoreRanking.Save(new ScoreRankingConfig("stage02", 1), mainGameManager.score);
             uiManager.ShowResultPanel();
         }
 

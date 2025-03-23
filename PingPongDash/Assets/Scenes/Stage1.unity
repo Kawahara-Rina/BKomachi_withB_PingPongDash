@@ -631,6 +631,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b231ca8c36d6747a201b255bcd3c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &291416667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6681278990674851009, guid: 17dc1d9e534247346a6340608872ac32, type: 3}
+  m_PrefabInstance: {fileID: 1907748719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &306023474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1878,6 +1889,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   state: 0
+--- !u!114 &1571288009 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8897582593657359624, guid: 554079034e741694fa022a8ad9696e33, type: 3}
+  m_PrefabInstance: {fileID: 731646196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1624578745
 GameObject:
   m_ObjectHideFlags: 0
@@ -2018,6 +2040,8 @@ MonoBehaviour:
   bgmManager: {fileID: 1325273353}
   enemy: {fileID: 42295151}
   stageName: stage01
+  scoreText: {fileID: 291416667}
+  timeText: {fileID: 1571288009}
   TimeLimit: 60000
 --- !u!1 &1714201960
 GameObject:
