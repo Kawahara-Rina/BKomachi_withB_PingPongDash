@@ -46,6 +46,10 @@ namespace Kabasawa
         [SerializeField]
         Text timeText;
 
+
+        [SerializeField]
+        Text resultText;
+
         /// <summary>
         /// 制限時間ミリ秒単位
         /// </summary>
@@ -116,6 +120,13 @@ namespace Kabasawa
             state = GameState.RESULT;
 
             mainGameManager.isActive = false;
+
+            resultText.text = "Time UP!!\n";
+            if(mainGameManager.score > ScoreRanking.LoadRanking(new ScoreRankingConfig(stageName, 1))[0])
+            {
+                resultText.text += "ハイスコア更新!!\n";
+            }
+            resultText.text += "Score : " + mainGameManager.score;
         }
 
         void GameOver()
@@ -123,6 +134,13 @@ namespace Kabasawa
             state = GameState.RESULT;
 
             mainGameManager.isActive = false;
+
+            resultText.text = "Gane Over...\n"; 
+            if (mainGameManager.score > ScoreRanking.LoadRanking(new ScoreRankingConfig(stageName, 1))[0])
+            {
+                resultText.text += "ハイスコア更新!!\n";
+            }
+            resultText.text += "Score : " + mainGameManager.score;
         }
 
         void Result()
