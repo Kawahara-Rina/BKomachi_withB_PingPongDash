@@ -15,6 +15,10 @@ namespace Kabasawa
 
         bool exit = false;
 
+        float remainingTime = 0f;
+
+        public float RemainingTime() { return remainingTime; }
+
         List<ITimerListeners> timerListeners = new List<ITimerListeners>();
 
 
@@ -45,7 +49,7 @@ namespace Kabasawa
 
         public async Task SetTimer(int _delayTime = 100)
         {
-            float remainingTime = waitTime; // Žc‚èŽžŠÔ
+            remainingTime = waitTime; // Žc‚èŽžŠÔ
 
             while (remainingTime > 0)
             {

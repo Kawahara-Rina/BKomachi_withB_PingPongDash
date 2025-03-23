@@ -12,7 +12,8 @@ public class TitleManager : MonoBehaviour
 
     // SEéÊìæóp
     private AudioSource audioSource;
-    [SerializeField] private AudioClip buttonSE;
+    [SerializeField] private AudioClip doorSE;
+    [SerializeField] private AudioClip templeSE;
 
     /// <summary>
     /// èâä˙âªä÷êî
@@ -32,7 +33,7 @@ public class TitleManager : MonoBehaviour
     public void PushStage1Button()
     {
         // SEñ¬ÇÁÇ∑
-        Common.PlaySE(audioSource,buttonSE);
+        Common.PlaySE(audioSource,doorSE);
         sceneName = Common.SCENE_STAGE1;
     }
 
@@ -42,7 +43,7 @@ public class TitleManager : MonoBehaviour
     public void PushStage2Button()
     {
         // SEñ¬ÇÁÇ∑
-        Common.PlaySE(audioSource, buttonSE);
+        Common.PlaySE(audioSource,templeSE);
         sceneName = Common.SCENE_STAGE2;
     }
 
