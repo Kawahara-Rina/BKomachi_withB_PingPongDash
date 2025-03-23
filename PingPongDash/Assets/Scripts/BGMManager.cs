@@ -26,6 +26,8 @@ public class BGMManager : MonoBehaviour
 
     private BGMState bgmState;
 
+    private PlayerAnimation pa;
+
     /// <summary>
     /// 初期化処理
     /// </summary>
@@ -37,6 +39,8 @@ public class BGMManager : MonoBehaviour
         hideAudioSource = hide.GetComponent<AudioSource>();
 
         bgmState = BGMState.PUSH;
+
+        pa = GameObject.Find("PlayerImage").GetComponent<PlayerAnimation>();
     }
 
     /// <summary>
@@ -57,25 +61,29 @@ public class BGMManager : MonoBehaviour
 
     /// <summary>
     /// BGMを切り替える関数
+    /// TODO ステートの変更
     /// </summary>
     /// <param name="_state"></param>
-    public void SetBGM(BGMState _state)
+    public void SetBGM(PlayerAnimation.State _state)
     {
         switch (_state)
         {
-            case BGMState.PUSH:
+            case PlayerAnimation.State.PUSH:
+            case PlayerAnimation.State.SHOW:
+            case PlayerAnimation.State.BACK:
+            case PlayerAnimation.State.NORMAL:
                 BGMFadeIn(pushAudioSource);
                 BGMFadeOut(dashAudioSource);
                 BGMFadeOut(hideAudioSource);
                 break;
 
-            case BGMState.DASH:
+            case PlayerAnimation.State.DASH:
                 BGMFadeIn(dashAudioSource);
                 BGMFadeOut(pushAudioSource);
                 BGMFadeOut(hideAudioSource);
                 break;
 
-            case BGMState.HIDE:
+            case PlayerAnimation.State.HIDE:
                 BGMFadeIn(hideAudioSource);
                 BGMFadeOut(pushAudioSource);
                 BGMFadeOut(dashAudioSource);
@@ -101,7 +109,7 @@ public class BGMManager : MonoBehaviour
             bgmState = BGMState.HIDE;
         }
 
-        SetBGM(bgmState);
+        SetBGM(pa.state);
     }
 
     private void Awake()
@@ -114,6 +122,8 @@ public class BGMManager : MonoBehaviour
     void Update()
     {
         // TODO デバッグ用　本番はこの関数を呼び出さない
-        DebugBGMChange();
+        //DebugBGMChange();
+        SetBGM(pa.state);
+
     }
 }
