@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class IMouseMoveObject : MonoBehaviour
+public abstract class IMouseMoveObject : IMouseMove_
 {
     /// <summary>
     /// マウスの上下移動の方向が切り替わったときに呼び出されます
@@ -28,24 +28,36 @@ public abstract class IMouseMoveObject : MonoBehaviour
     {
 
     }
+}
 
+public abstract class IMouseMove
+{
     /// <summary>
-    /// オブザーバーに登録.
-    /// このクラスを使う場合最初に起動してください
+    /// マウスの上下移動の方向が切り替わったときに呼び出されます
     /// </summary>
-    protected void RegisterMouseMoveObserver()
+    public virtual void OnMouseMoveChangeEvent()
     {
-        MouseMoveInput.CreateInstance().Register(this);
+
     }
 
     /// <summary>
-    /// オブザーバー登録を解除
-    /// eventを使わなくなった場合この関数を呼び出してください
+    /// マウスの上下移動の方向が切り替わったときに上方向なら呼び出されます
     /// </summary>
-    protected void UnregisterMouseMoveObserver()
+    public virtual void OnMouseMoveChangeUP()
     {
-        MouseMoveInput.CreateInstance().Unregister(this);
+
     }
 
+    /// <summary>
+    /// マウスの上下移動の方向が切り替わったときに下方向なら呼び出されます
+    /// </summary>
+    public virtual void OnMouseMoveChangeDown()
+    {
+
+    }
+}
+
+public abstract class IMouseMove_ : MonoBehaviour 
+{
 
 }

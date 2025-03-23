@@ -6,16 +6,13 @@ public class PlayerAnimation : MonoBehaviour
     // インターホン前(戻る場所)のx座標指定用
     [SerializeField] private float defPosX = 0.0f;
     // インターホン前に戻るまでのスピード
-    [SerializeField] private float backSpeed=1500.0f;
+    [SerializeField] private float backSpeed = 1500.0f;
 
     // プレイヤーの座標取得用
     private Vector2 pos;
- 
+
     // アニメーター取得用
     private Animator animator;
-
-    // ステートが変わったかどうか
-    private bool isStateChange;
 
     // 走るときの追加値
     [SerializeField] private float plusDist = 10.0f;
@@ -25,12 +22,15 @@ public class PlayerAnimation : MonoBehaviour
     private float dashEndPos;
 
     // デバッグ用　走る用の変数
-    private int dashCount;
+    public int dashCount;
+
+    public float pushSpeed;
 
     // デバッグ用
     // TODO　ここの取得するステータスを変更
     public enum State
     {
+        IDLE,
         PUSH,
         DASH,
         HIDE,
@@ -41,92 +41,54 @@ public class PlayerAnimation : MonoBehaviour
 
     public State state = State.PUSH;
 
-    // UIManager取得用
-    private UIManager um;
-
-    // SE取得
-    private AudioSource audioSource;
-    [SerializeField] private AudioClip doorSE;
-    [SerializeField] private AudioClip templeSE;
 
     /// <summary>
     /// 初期化処理
     /// </summary>
     private void Init()
     {
+        pushSpeed = 1;
         animator = GetComponent<Animator>();
-        isStateChange = false;
 
-        um = GameObject.Find("UIManager").GetComponent<UIManager>();
-
-        audioSource = GetComponent<AudioSource>();
+        //um = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     /// <summary>
-    /// アニメーション変更処理
+    /// ステート変更の関数
     /// </summary>
-    private void AnimationChange()
+    public void ChangeState(State newState)
     {
-        // デバッグ用
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (state != newState)
         {
-            state = State.PUSH;
-            isStateChange = true;
+            animator.ResetTrigger(StateToAnimationName(state));
+
+            state = newState;
+            animator.SetTrigger(StateToAnimationName(newState));
         }
-        if (Input.GetKeyDown(KeyCode.W))
+    }
+
+    // Stateからアニメーションの名前に変換する
+    private string StateToAnimationName(State state)
+    {
+        switch (state)
         {
-            state = State.DASH;
-            isStateChange = true;
+            case State.IDLE:
+                return "Idle";
+            case State.PUSH:
+                return "Push";
+            case State.DASH:
+                return "Dash";
+            case State.HIDE:
+                return "Hide";
+            case State.SHOW:
+                return "Show";
+            case State.NORMAL:
+                return "Normal";
+            case State.BACK:
+                return "Back";
+            default:
+                return string.Empty;
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            state = State.HIDE;
-            isStateChange = true;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            state = State.SHOW;
-            isStateChange = true;
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            state = State.NORMAL;
-            isStateChange = true;
-        }
-
-        if (isStateChange)
-        {
-            switch (state)
-            {
-                case State.PUSH:
-                    um.ChangeMouseGUI(Common.STATE_PUSH);
-                    animator.SetTrigger("Idle");
-                    break;
-
-                case State.DASH:
-                    um.ChangeMouseGUI(Common.STATE_DASH);
-                    animator.SetTrigger("Dash");
-                    break;
-
-                case State.HIDE:
-                    um.ChangeMouseGUI(Common.STATE_HIDE);
-                    animator.SetTrigger("Hide");
-                    break;
-
-                case State.SHOW:
-                    um.ChangeMouseGUI(Common.STATE_SHOW);
-                    animator.SetTrigger("Show");
-
-                    break;
-
-                case State.NORMAL:
-                    um.ChangeMouseGUI(Common.STATE_NORMAL);
-                    animator.SetTrigger("Normal");
-                    break;
-            }
-        }
-
-        isStateChange = false;
     }
 
     /// <summary>
@@ -139,11 +101,9 @@ public class PlayerAnimation : MonoBehaviour
         // TODO 移動していない場合はBACKアニメーションは再生しない
         pos = transform.localPosition;
 
-        if(pos.x == defPosX)
+        if (pos.x == defPosX)
         {
-            isStateChange = true;
-            state = State.PUSH;
-
+            ChangeState(State.PUSH);
         }
         else
         {
@@ -159,24 +119,24 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (state == State.BACK)
         {
+            Debug.Log("a");
+
             // 座標取得
             pos = transform.localPosition;
             pos.x -= backSpeed * Time.deltaTime;
 
-           
 
-                // インターホン前まで動かす
-                if (pos.x > defPosX)
-                {
-                    transform.localPosition = new Vector2(pos.x, pos.y);
-                }
-                else
-                {
-                    transform.localPosition = new Vector2(defPosX, pos.y);
-                    state = State.PUSH;
-                    isStateChange = true;
-                }
-            
+            // インターホン前まで動かす
+            if (pos.x > defPosX)
+            {
+                transform.localPosition = new Vector2(pos.x, pos.y);
+            }
+            else
+            {
+                transform.localPosition = new Vector2(defPosX, pos.y);
+                ChangeState(State.IDLE);
+            }
+
 
             // 走る距離初期化
             dashEndPos = defPosX;
@@ -205,7 +165,7 @@ public class PlayerAnimation : MonoBehaviour
             }
 
             // TODO dashCountを本番に使う用の変数に修正する
-            if(tmpCount != dashCount)
+            if (tmpCount != dashCount)
             {
                 dashEndPos += plusDist;
             }
@@ -222,21 +182,6 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// デバッグ用　本番は呼び出さない
-    /// </summary>
-    private void Debug()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Common.PlaySE(audioSource, templeSE);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Common.PlaySE(audioSource, doorSE);
-        }
-    }
-
     private void Awake()
     {
         // 初期化処理
@@ -246,8 +191,14 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // アニメーション変更処理
-        AnimationChange();
+        if (state == State.PUSH)
+        {
+            animator.speed = pushSpeed;
+        }
+        else
+        {
+            animator.speed = 1;
+        }
 
         // 走っている時の動き
         DashMove();
@@ -255,8 +206,7 @@ public class PlayerAnimation : MonoBehaviour
         // 隠れた後 or 走った後→→インターホン前に戻る動き
         BackMove();
 
-
-        // TODO デバッグ用　本番は呼び出さない
-        Debug();
+        Debug.Log(state);
     }
+
 }

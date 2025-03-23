@@ -69,6 +69,7 @@ public class BGMManager : MonoBehaviour
         switch (_state)
         {
             case PlayerAnimation.State.PUSH:
+            case PlayerAnimation.State.SHOW:
             case PlayerAnimation.State.BACK:
             case PlayerAnimation.State.NORMAL:
                 BGMFadeIn(pushAudioSource);
