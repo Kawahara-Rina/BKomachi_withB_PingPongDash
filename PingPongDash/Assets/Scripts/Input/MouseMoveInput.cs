@@ -8,7 +8,7 @@ namespace Kabasawa
     public class MouseMoveInput 
     {
         [SerializeField,Range(0f,0.9f)]
-        float deadZone = 0f;
+        float deadZone = 0.5f;
 
         MouseMoveDirection preInputVec = MouseMoveDirection.NONE;
 

@@ -9,7 +9,7 @@ using UnityEngine.Playables;
 /// <summary>
 /// Play中の状態を管理するクラス
 /// </summary>
-public class MainGameManager :  IMouseMove, IMouseScroll
+public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickListener
 {
 
     /*********************管理するクラス*********************/
@@ -32,6 +32,8 @@ public class MainGameManager :  IMouseMove, IMouseScroll
 
     int score = 0;
 
+    float preDashInput = 0;
+
     public MainGameManager(PlayerAnimation player, BGMManager bgmManager, MainGameUI mainGameUI)
     {
         this.player = player;
@@ -42,9 +44,21 @@ public class MainGameManager :  IMouseMove, IMouseScroll
 
         mouse.mouseScroll.Register(this);
         mouse.mouseMoveInput.Register(this);
+        mouse.alternateMouseClickObserver.Register(this);
 
+    }
 
-        player.ChangeState(PlayerAnimation.State.PUSH);
+    public void OnAlternateMouseClick()
+    {
+        Debug.Log("AAAA");
+
+        preDashInput = Time.fixedTime;
+
+        player.dashCount++;
+
+        player.ChangeState(PlayerAnimation.State.DASH);
+        bgmManager.SetBGM(player.state);
+        mainGameUI.ChangeMouseGUI(Common.STATE_DASH);
     }
 
     /// <summary>
@@ -84,20 +98,27 @@ public class MainGameManager :  IMouseMove, IMouseScroll
         //TODO 妥協なのできれいにできたらする
         mainGameUI.ChangeMouseGUI(Common.STATE_PUSH);
 
-        if (mouse.mouseAvg.Get() < 0.2f)
-        {
-            player.ChangeState(PlayerAnimation.State.IDLE);
-            player.pushSpeed = 0;
-        }
-        else
-        {
-            player.pushSpeed = mouse.mouseAvg.Get();
-        }
+        //if (mouse.mouseAvg.Get() < 0.2f)
+        //{
+        //    player.ChangeState(PlayerAnimation.State.IDLE);
+        //    player.pushSpeed = 0;
+        //}
+        //else
+        //{
+        //    player.pushSpeed = mouse.mouseAvg.Get();
+        //}
     }
 
     void DASH()
     {
-        Debug.Log("DASH処理を実行");
+        if(preDashInput > Time.fixedTime + 0.1f)
+        {
+            player.ChangeState(PlayerAnimation.State.NORMAL);
+            player.dashCount = 0;
+
+            bgmManager.SetBGM(player.state);
+            mainGameUI.ChangeMouseGUI(Common.STATE_NORMAL);
+        }
     }
 
     public void OnScrollDown()
@@ -135,8 +156,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll
         if(player.state == PlayerAnimation.State.PUSH)
         {
             score++;
-            Debug.Log(score);
+            Debug.Log("scoreUP!!");
         }
     }
-
 }

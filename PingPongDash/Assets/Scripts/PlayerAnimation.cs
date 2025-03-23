@@ -22,7 +22,7 @@ public class PlayerAnimation : MonoBehaviour
     private float dashEndPos;
 
     // デバッグ用　走る用の変数
-    private int dashCount;
+    public int dashCount;
 
     public float pushSpeed;
 
@@ -39,7 +39,7 @@ public class PlayerAnimation : MonoBehaviour
         BACK,
     }
 
-    public State state = State.IDLE;
+    public State state = State.PUSH;
 
 
     /// <summary>
