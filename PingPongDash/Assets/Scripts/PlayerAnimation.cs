@@ -119,8 +119,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (state == State.BACK)
         {
-            Debug.Log("a");
-
             // ç¿ïWéÊìæ
             pos = transform.localPosition;
             pos.x -= backSpeed * Time.deltaTime;
