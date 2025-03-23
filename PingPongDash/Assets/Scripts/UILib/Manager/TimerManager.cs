@@ -47,6 +47,8 @@ public class TimerManager : MonoBehaviour
     // 小数点位置指定用
     private string format;
 
+    int a;
+
     /// <summary>
     /// 初期化処理
     /// </summary>
@@ -64,6 +66,11 @@ public class TimerManager : MonoBehaviour
     /// </summary>
     private void CountUpTimer()
     {
+        // タイマー変数を別スクリプトから取得して、表示
+        // TODO ここでタイマー変数を取得
+        //timer = GetTimer()?;
+
+        /*
         if (timer < stopTime)
         {
             timer += Mathf.Abs(addTime) * Time.deltaTime;
@@ -72,6 +79,7 @@ public class TimerManager : MonoBehaviour
         {
             timer = stopTime;
         }
+        */
     }
 
     /// <summary>
