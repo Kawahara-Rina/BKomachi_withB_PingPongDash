@@ -669,7 +669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6054974314435887822, guid: d013da4b87a1df347a193ecaf07a45a6, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8243669534476855097, guid: d013da4b87a1df347a193ecaf07a45a6, type: 3}
       propertyPath: defPosX
