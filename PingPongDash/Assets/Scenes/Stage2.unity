@@ -248,6 +248,17 @@ Transform:
   - {fileID: 825670018}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &214910767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6995211822422700492, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+  m_PrefabInstance: {fileID: 1059216637}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &291668851
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +701,7 @@ MonoBehaviour:
   stageName: stage02
   scoreText: {fileID: 307159575}
   timeText: {fileID: 1246548443}
+  resultText: {fileID: 214910767}
   TimeLimit: 60000
   audioClip: {fileID: 8300000, guid: f4deee5a54f56c547b116fed57073faa, type: 3}
 --- !u!82 &825670020
