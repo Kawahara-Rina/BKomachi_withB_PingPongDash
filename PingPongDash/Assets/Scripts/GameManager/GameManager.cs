@@ -31,6 +31,9 @@ namespace Kabasawa
 
         MainGameManager mainGameManager;
 
+        [SerializeField]
+        string stageName = "stage01";
+
         /// <summary>
         /// §ŒÀŠÔƒ~ƒŠ•b’PˆÊ
         /// </summary>
@@ -88,6 +91,8 @@ namespace Kabasawa
 
         void Result()
         {
+            ScoreRanking.Save(new ScoreRankingConfig(stageName, 1), mainGameManager.score);
+            ScoreRanking.Save(new ScoreRankingConfig("stage02", 1), mainGameManager.score);
             uiManager.ShowResultPanel();
         }
 
