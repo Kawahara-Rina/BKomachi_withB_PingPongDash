@@ -79,8 +79,8 @@ public class TitleManager : MonoBehaviour
     private void ShowHighScore()
     {
         // TODO ハイスコア取得
-        //stage1HighScoreText.text = GetHighScore()?.ToString();
-        //stage2HighScoreText.text = GetHighScore()?.ToString();
+        stage1HighScoreText.text = ScoreRanking.LoadRanking(new ScoreRankingConfig("stage01",1))[0].ToString();
+        stage2HighScoreText.text = ScoreRanking.LoadRanking(new ScoreRankingConfig("stage02", 1))[0].ToString();
     }
 
     private void Awake()

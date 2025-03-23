@@ -29,7 +29,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
     /*********************InputƒNƒ‰ƒX*********************/
 
 
-    int score = 0;
+    public int score = 0;
 
     float preDashInput = 0;
 

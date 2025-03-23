@@ -1077,7 +1077,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1488015787}
   bgmManager: {fileID: 1035480434}
-  TimeLimit: 2147483647
+  stageName: stage01
+  TimeLimit: 3000
 --- !u!224 &1800670022 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2112148221453382875, guid: a0192594a71fd164d893183a3c09bf5c, type: 3}
