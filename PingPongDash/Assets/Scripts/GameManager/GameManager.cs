@@ -52,6 +52,11 @@ namespace Kabasawa
         [SerializeField]
         int TimeLimit = 60 * 1000;
 
+        AudioSource audioSource;
+
+        [SerializeField]
+        AudioClip audioClip;
+
         void Start()
         {
             Init();
@@ -70,6 +75,8 @@ namespace Kabasawa
         
         void Init()
         {
+            audioSource = GetComponent<AudioSource>();
+
             timerObserver = new TimerObserver(TimeLimit, this);
             state = GameState.START;
 
@@ -77,7 +84,7 @@ namespace Kabasawa
 
             uiManager.ChangeMouseGUI(Common.STATE_NORMAL);
 
-            mainGameManager = new MainGameManager(player,bgmManager,uiManager, enemy);
+            mainGameManager = new MainGameManager(player,bgmManager,uiManager, enemy, audioSource,audioClip);
 
             state = GameState.START;
         }
