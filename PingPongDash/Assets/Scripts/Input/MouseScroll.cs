@@ -22,6 +22,11 @@ namespace NakanoScroll
             {
                 foreach (IMouseScroll obj in objects)
                 {
+                    if (obj == null)
+                    {
+                        return;
+                    }
+
                     obj.OnScrollUp();
                 }
                 return;
@@ -30,6 +35,11 @@ namespace NakanoScroll
             {
                 foreach (IMouseScroll obj in objects)
                 {
+                    if (obj == null)
+                    {
+                        return;
+                    }
+
                     obj.OnScrollDown();
                 }
                 return;

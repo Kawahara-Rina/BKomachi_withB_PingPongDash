@@ -57,6 +57,11 @@ namespace Kabasawa
 
                 foreach(IMouseMove obj in objects)
                 {
+                    if (obj == null)
+                    {
+                        return;
+                    }
+
                     obj.OnMouseMoveChangeEvent();
                 }
 
@@ -65,6 +70,11 @@ namespace Kabasawa
                     case MouseMoveDirection.UP:
                         foreach (IMouseMove obj in objects)
                         {
+                            if (obj == null)
+                            {
+                                return;
+                            }
+
                             obj.OnMouseMoveChangeUP();
                         }
                     break;
@@ -74,6 +84,11 @@ namespace Kabasawa
 
                         foreach (IMouseMove obj in objects)
                         {
+                            if (obj == null)
+                            {
+                                return;
+                            }
+
                             obj.OnMouseMoveChangeDown();
                         }
 
