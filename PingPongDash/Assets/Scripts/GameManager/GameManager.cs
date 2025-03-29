@@ -40,21 +40,11 @@ namespace Kabasawa
         [SerializeField]
         string stageName = "stage01";
 
-        [SerializeField]
-        Text scoreText;
 
-        [SerializeField]
-        Text timeText;
-
+        TimerManager time;
 
         [SerializeField]
         Text resultText;
-
-        /// <summary>
-        /// 制限時間ミリ秒単位
-        /// </summary>
-        [SerializeField]
-        int TimeLimit = 60 * 1000;
 
         AudioSource audioSource;
 
@@ -70,8 +60,6 @@ namespace Kabasawa
         void Update()
         {
             GameLoop();
-            timeText.text = ((float)timerObserver.RemainingTime() / 1000f).ToString();
-            scoreText.text = mainGameManager.score.ToString();
 
             SceneChange();
         }
@@ -79,9 +67,10 @@ namespace Kabasawa
         
         void Init()
         {
+            time = GameObject.Find("CanvasUI/Timer").GetComponent<TimerManager>();
+
             audioSource = GetComponent<AudioSource>();
 
-            timerObserver = new TimerObserver(TimeLimit, this);
             state = GameState.START;
 
             uiManager = new MainGameUI();
@@ -99,17 +88,24 @@ namespace Kabasawa
         void GameStart()
         {
             state = GameState.PLAY;
-            timerObserver.SetTimer();
             uiManager.ChangeMouseGUI(Common.STATE_PUSH);
 
             mainGameManager.isActive = true;
             enemy.gameObject.SetActive(true);
+            time.CountStart();
+
         }
 
         void Play()
         {
             mainGameManager.Loop();
-            if(mainGameManager.isGameOver)
+
+            if(time.GetTimer() <= 0)
+            {
+                OnTimeUp();
+            }
+
+            if (mainGameManager.isGameOver)
             {
                 state = GameState.GAME_OVER;
             }
@@ -126,6 +122,7 @@ namespace Kabasawa
             {
                 resultText.text += "ハイスコア更新!!\n";
             }
+
             resultText.text += "Score : " + mainGameManager.score;
         }
 
@@ -140,11 +137,14 @@ namespace Kabasawa
             {
                 resultText.text += "ハイスコア更新!!\n";
             }
+
             resultText.text += "Score : " + mainGameManager.score;
         }
 
         void Result()
         {
+            time.CountStop();
+
             ScoreRanking.Save(new ScoreRankingConfig(stageName, 1), mainGameManager.score);
             uiManager.ShowResultPanel();
         }

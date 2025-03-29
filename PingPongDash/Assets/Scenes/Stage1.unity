@@ -501,17 +501,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b231ca8c36d6747a201b255bcd3c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &291416667 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6681278990674851009, guid: 17dc1d9e534247346a6340608872ac32, type: 3}
-  m_PrefabInstance: {fileID: 1907748719}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &306023474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1032,6 +1021,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8684056142429721387, guid: 554079034e741694fa022a8ad9696e33, type: 3}
+      propertyPath: timer
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684056142429721387, guid: 554079034e741694fa022a8ad9696e33, type: 3}
+      propertyPath: stopTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684056142429721387, guid: 554079034e741694fa022a8ad9696e33, type: 3}
+      propertyPath: isCountUp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684056142429721387, guid: 554079034e741694fa022a8ad9696e33, type: 3}
+      propertyPath: decimalPlace
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1134,6 +1139,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1624601095648903755, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2cf2572a180ba874f96712d804a66fd2, type: 3}
     - target: {fileID: 4300661305930935775, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -1142,6 +1151,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1657568220}
+    - target: {fileID: 6054047941203860904, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2cf2572a180ba874f96712d804a66fd2, type: 3}
+    - target: {fileID: 6812404051078996440, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6812404051078996440, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995211822422700492, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 7b299467be7a4cd468488f0a4619a8ae, type: 3}
     - target: {fileID: 7265745318749734909, guid: f675f13a96d10094ebf24b4a1c448155, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -1761,17 +1786,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   state: 0
---- !u!114 &1571288009 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8897582593657359624, guid: 554079034e741694fa022a8ad9696e33, type: 3}
-  m_PrefabInstance: {fileID: 731646196}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1624578745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,10 +1927,7 @@ MonoBehaviour:
   bgmManager: {fileID: 1325273353}
   enemy: {fileID: 42295151}
   stageName: stage01
-  scoreText: {fileID: 291416667}
-  timeText: {fileID: 1571288009}
   resultText: {fileID: 832238019}
-  TimeLimit: 60000
   audioClip: {fileID: 8300000, guid: 86ed2828672a07f468d46d8d1a80bb1a, type: 3}
 --- !u!82 &1657568221
 AudioSource:

@@ -204,7 +204,6 @@ public class PlayerAnimation : MonoBehaviour
         // 隠れた後 or 走った後→→インターホン前に戻る動き
         BackMove();
 
-        Debug.Log(state);
     }
 
 }

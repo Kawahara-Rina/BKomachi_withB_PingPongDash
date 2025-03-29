@@ -39,6 +39,11 @@ namespace Kabasawa
 
                 foreach (IAlternateMouseClickListener lis in listeners)
                 {
+                    if(lis == null)
+                    {
+                        return;
+                    }
+
                     lis.OnAlternateMouseClick();
                 }
             }
@@ -50,6 +55,11 @@ namespace Kabasawa
 
                 foreach (IAlternateMouseClickListener lis in listeners)
                 {
+                    if (lis == null)
+                    {
+                        return;
+                    }
+
                     lis.OnAlternateMouseClick();
                 }
             }

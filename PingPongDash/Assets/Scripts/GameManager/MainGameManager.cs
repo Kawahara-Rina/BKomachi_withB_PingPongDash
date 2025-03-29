@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -42,6 +43,9 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
     private AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
 
+    ScoreManager scoreManager;
+
+
     public MainGameManager(PlayerAnimation player, BGMManager bgmManager, MainGameUI mainGameUI, Enemy enemy, AudioSource audio, AudioClip audioClip)
     {
         this.player = player;
@@ -57,6 +61,7 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
         mouse.mouseMoveInput.Register(this);
         mouse.alternateMouseClickObserver.Register(this);
 
+        scoreManager = GameObject.Find("CanvasUI/Score").GetComponent<ScoreManager>();
     }
 
     public void OnAlternateMouseClick()
@@ -119,7 +124,6 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
 
     void PUSH()
     {
-        Debug.Log("PUSHèàóùÇé¿çs");
         //TODO ë√ã¶Ç»ÇÃÇ≈Ç´ÇÍÇ¢Ç…Ç≈Ç´ÇΩÇÁÇ∑ÇÈ
         mainGameUI.ChangeMouseGUI(Common.STATE_PUSH);
 
@@ -183,9 +187,11 @@ public class MainGameManager :  IMouseMove, IMouseScroll,IAlternateMouseClickLis
         if (player.state == PlayerAnimation.State.PUSH)
         {
             score++;
+            scoreManager.CountUpScore();
+
             enemy.PingPong();
             Common.PlaySE(audioSource, audioClip);
-            Debug.Log("scoreUP!!");
+            Debug.Log(score);
         }
     }
 }
